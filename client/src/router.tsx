@@ -1,8 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './routes/home';
 import { AnimatePresence, motion } from 'framer-motion';
-import Test from './routes/test';
-import MantineDemo from './routes/mantineDemo';
 
 export default function Router() {
 	const location = useLocation();
@@ -23,8 +21,6 @@ export default function Router() {
 					<Routes location={location}>
 						<Route path='/'>
 							<Route index element={<Home />} />
-							<Route path='/test' element={<Test />} />
-							<Route path='/mantine-demo' element={<MantineDemo />} />
 						</Route>
 					</Routes>
 				</motion.div>
