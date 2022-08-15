@@ -4,6 +4,11 @@ This is a retmod template. Beside the basic retmod "additions", this template al
 - Mantine (a React component library)
 - SCSS (a CSS framework)
 - Page transitions (using Framer Motion)
+- Websocket & HTTP Server (using express)
+- tRPC Client & Server
+- Basic chat app functionality (using tRPC)
 And other configurations.
+
+This template is based on the [Mantine, Daisyui & SCSS template](https://github.com/Retmod/template-mantine-daisyui-scss).
 
 For additional information about Retmod, look [here](https://retmod.r07.dev)
