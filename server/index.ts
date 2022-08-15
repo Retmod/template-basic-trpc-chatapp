@@ -18,8 +18,7 @@ const retmodEnv = process.env.RETMOD_ENV || 'PROD';
 
 // webserver stuff
 const app = express(); // create express app
-const server =
-	retmodEnv == 'dev' ? http.createServer(app) : https.createServer(app); // then, init a http server based on the express app
+const server = http.createServer(app); // then, init a http server based on the express app
 const wss = new ws.Server({ server }); // finally, create a websocket server associated with the http server
 
 const port = 3000;
