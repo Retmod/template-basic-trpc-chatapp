@@ -9,13 +9,22 @@ import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import EventEmitter from 'events';
 import * as ws from 'ws';
 import * as http from 'http';
+import * as https from 'https';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const retmodEnv = process.env.RETMOD_ENV || 'PROD';
 
 // webserver stuff
 const app = express(); // create express app
-const server = http.createServer(app); // then, init a http server based on the express app
+const server =
+	retmodEnv == 'dev' ? http.createServer(app) : https.createServer(app); // then, init a http server based on the express app
 const wss = new ws.Server({ server }); // finally, create a websocket server associated with the http server
 
 const port = 3000;
+
+console.log(chalk.yellowBright(`[RETMOD]: Using environment: ${retmodEnv}`));
 
 // commented out MongoDB stuff - You can do something with it, but this is a simple chat app.
 /* const MongoDBConfig: {
