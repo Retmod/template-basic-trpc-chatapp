@@ -6,8 +6,10 @@ import trpc from './util/trpc';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createWSClient, wsLink } from '@trpc/client/links/wsLink';
 
+const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'; // use wss for https and ws for http. Useful for local testing.
+
 const wsClient = createWSClient({
-	url: `ws://${window.location.host}`,
+	url: `${wsProtocol}://${window.location.host}`,
 });
 
 const queryClient = new QueryClient();
