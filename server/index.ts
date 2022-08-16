@@ -9,19 +9,25 @@ import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import EventEmitter from 'events';
 import * as ws from 'ws';
 import * as http from 'http';
-import * as https from 'https';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const retmodEnv = process.env.RETMOD_ENV || 'PROD';
+const port = 3000;
 
 // webserver stuff
 const app = express(); // create express app
-const server = http.createServer(app); // then, init a http server based on the express app
-const wss = new ws.Server({ server }); // finally, create a websocket server associated with the http server
+const server = app.listen(port, () => {
+	console.log(chalk.green(`[SERVER]: Listening on port ${port}`));
+}); // http server returned by app.listen()
+const wss = new ws.Server({ noServer: true }); // finally, create a websocket server associated with the http server
 
-const port = 3000;
+server.on('upgrade', (req, sock, head) => {
+	wss.handleUpgrade(req, sock, head, (ws) => {
+		wss.emit('connection', ws, req);
+	});
+});
 
 console.log(chalk.yellowBright(`[RETMOD]: Using environment: ${retmodEnv}`));
 
@@ -133,8 +139,4 @@ app.use(express.static('public'));
 
 app.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
-server.listen(port, () => {
-	console.log(chalk.green(`[SERVER]: Listening on port ${port}`));
 });
