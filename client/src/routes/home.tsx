@@ -14,13 +14,18 @@ export default function Home() {
 	const [name, setName] = useLocalStorage({
 		key: 'name',
 	});
-	const [canChat, setCanChat] = useState(
-		name != null && name != undefined && name.length > 0,
-	);
+	const [canChat, setCanChat] = useState(false);
 
 	useEffect(() => {
+		console.log(name);
 		setMsgs(messages.data || []);
 	}, [messages.data]);
+
+	useEffect(() => {
+		if (name && name.trim().length > 0) {
+			setCanChat(true);
+		}
+	}, [name]);
 
 	// subscribe to message changes
 	trpc.useSubscription(['onAdd'], {
@@ -60,8 +65,8 @@ export default function Home() {
 						</Group>
 					</Dialog>
 					<div className='h-[90vh] overflow-y-auto flex flex-col justify-end'>
-						{loadedMsgs?.map((m) => (
-							<div className='bg-base-300 my-2 p-4 rounded-md'>
+						{loadedMsgs?.map((m, i) => (
+							<div className='bg-base-300 my-2 p-4 rounded-md' key={i}>
 								<h5>{m.user}</h5>
 								<h3>{m.message}</h3>
 							</div>
