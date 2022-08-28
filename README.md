@@ -1,4 +1,7 @@
 # Retmod Template
+
+## Please note, that this template is not finished yet. Use it at your own risk!
+
 This is a retmod template. Beside the basic retmod "additions", this template also contains the following features:
 - DaisyUI (a tailwindcss component library)
 - Mantine (a React component library)
